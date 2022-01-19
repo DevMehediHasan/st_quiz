@@ -1,0 +1,22 @@
+{
+    "name": "mehedi/beatnik-quiz",
+    "description": "Quiz manage for WordPress Developed by Beatnik",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "Mehedi\\BeatnikQuiz\\": "includes/"
+        },
+        "files": ["includes/functions.php"]
+    },
+    "authors": [
+        {
+            "name": "EngMehed",
+            "email": "mehedhasan87@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "php-stubs/wordpress-stubs": "dev-master"
+    }
+}
