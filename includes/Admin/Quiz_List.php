@@ -23,9 +23,9 @@ class Quiz_List extends \WP_List_Table
 	public function get_columns(){
 		return [
 			'cb'	=>	'<input type="checkbox"/>',
-			'title' =>	__('Title', 'beatnik-quiz'),
-			// 'image' =>	__('Image', 'beatnik-quiz'),
-			'created_at' =>	__('Date', 'beatnik-quiz'),
+			'title' =>	__('Title', 'studiox-quiz'),
+			// 'image' =>	__('Image', 'studiox-quiz'),
+			'created_at' =>	__('Date', 'studiox-quiz'),
 		];
 	}
 
@@ -43,12 +43,12 @@ class Quiz_List extends \WP_List_Table
 	public function column_title( $item){
 		$actions = [];
 
-		$actions['edit'] = sprintf('<a href="%s" title="%s">%s</a>', admin_url('admin.php?page=beatnik-quiz&action=edit&id' . $item->id), $item->id, __('Edit', 'beatnik-quiz'));
+		$actions['edit'] = sprintf('<a href="%s" title="%s">%s</a>', admin_url('admin.php?page=studiox-quiz&action=edit&id' . $item->id), $item->id, __('Edit', 'studiox-quiz'));
 
-		$actions['delete'] = sprintf('<a href="%s" class="submitdelete" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url(admin_url('admin-post.php?action=bt_delete_quiz&id=' . $item->id), 'bt_delete_quiz'), $item->id, __('Delete', 'beatnik-quiz'), __('Delete', 'beatnik-quiz'));
+		$actions['delete'] = sprintf('<a href="%s" class="submitdelete" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url(admin_url('admin-post.php?action=bt_delete_quiz&id=' . $item->id), 'bt_delete_quiz'), $item->id, __('Delete', 'studiox-quiz'), __('Delete', 'studiox-quiz'));
 
 		return sprintf(
-			'<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url('admin.php?page=beatnik-quiz&action=view&id' . $item->id), $item->title, $this->row_actions($actions) 
+			'<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url('admin.php?page=studiox-quiz&action=view&id' . $item->id), $item->title, $this->row_actions($actions) 
 		);
 	}
 

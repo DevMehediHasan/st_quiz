@@ -52,27 +52,37 @@ class Quiz
 		
 		$id 	= isset($_POST['id']) ? intval( $_POST['id']) : 0;
 		$title = isset( $_POST['title']) ? sanitize_text_field( $_POST['title']): '';
+		$title_one = isset( $_POST['title_one']) ? sanitize_text_field( $_POST['title_one']): '';
+		$title_two = isset( $_POST['title_two']) ? sanitize_text_field( $_POST['title_two']): '';
 
 		// $image = isset( $_POST['image']) ? sanitize_file_name( $_POST['image']): '';
 
 		$image = media_handle_upload('image', 0);
-		$image_one = media_handle_upload('image', 0);
-		$image_two = media_handle_upload('image', 0);
+		$image_one = media_handle_upload('image_one', 0);
+		$image_two = media_handle_upload('image_two', 0);
 
 		if (empty($title)) {
-			$this->errors['title'] = __('Please provide a Title', 'beatnik-quiz');
+			$this->errors['title'] = __('Please provide a Title', 'studiox-quiz');
 		}
 
 		if (empty($image)) {
-			$this->errors['image'] = __('Please provide a Feature Image', 'beatnik-quiz');
+			$this->errors['image'] = __('Please provide a Feature Image', 'studiox-quiz');
+		}
+
+		if (empty($title_one)) {
+			$this->errors['title_one'] = __('Please provide a first Title', 'studiox-quiz');
 		}
 
 		if (empty($image_one)) {
-			$this->errors['image_one'] = __('Please provide a first Image', 'beatnik-quiz');
+			$this->errors['image_one'] = __('Please provide a first Image', 'studiox-quiz');
+		}
+
+		if (empty($title_two)) {
+			$this->errors['title_two'] = __('Please provide a seceond Title', 'studiox-quiz');
 		}
 
 		if (empty($image_two)) {
-			$this->errors['image_two'] = __('Please provide a seceond Image', 'beatnik-quiz');
+			$this->errors['image_two'] = __('Please provide a seceond Image', 'studiox-quiz');
 		}
 
 		if (! empty($this->errors)) {
@@ -82,14 +92,16 @@ class Quiz
 		$insert_id = bt_insert_quiz([
 			'title'	=> $title,
 			'image'	=> $image,
-			'image_one'	=> $image,
-			'image_two'	=> $image
+			'title_one'	=> $title_one,
+			'image_one'	=> $image_one,
+			'title_two'	=> $title_two,
+			'image_two'	=> $image_two
 		]);
 
 		if (is_wp_error($insert_id)) {
 			wp_die($insert_id->get_error_message());
 		}
-		$redirected_to = admin_url('admin.php?page=beatnik-quiz&inserted=true');
+		$redirected_to = admin_url('admin.php?page=studiox-quiz&inserted=true');
 		wp_redirect($redirected_to);
 		exit;
 	}
@@ -119,9 +131,9 @@ class Quiz
 		$id 	= isset($_REQUEST['id']) ? intval( $_REQUEST['id']) : 0;
 
 		if (bt_delete_quiz($id)) {
-			$redirected_to = admin_url('admin.php?page=beatnik-quiz&quiz-deleted=true');
+			$redirected_to = admin_url('admin.php?page=studiox-quiz&quiz-deleted=true');
 		} else{
-			$redirected_to = admin_url('admin.php?page=beatnik-quiz&quiz-deleted=false');
+			$redirected_to = admin_url('admin.php?page=studiox-quiz&quiz-deleted=false');
 		}
 		wp_redirect($redirected_to);
 		exit;

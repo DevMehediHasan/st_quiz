@@ -1,13 +1,13 @@
 
 <div class="wrap">
-	<h1 class="wp-heading-inline"><?php _e('Edit Quiz', 'beatnik-quiz'); ?></h1>
+	<h1 class="wp-heading-inline"><?php _e('Edit Quiz', 'studiox-quiz'); ?></h1>
 
-	<a class="page-title-action" href="<?php echo admin_url('admin.php?page=beatnik-quiz'); ?>"><?php _e('Back', 'beatnik-quiz'); ?></a>
+	<a class="page-title-action" href="<?php echo admin_url('admin.php?page=studiox-quiz'); ?>"><?php _e('Back', 'studiox-quiz'); ?></a>
 
 
     <?php if (isset($_GET['quiz-updated'])) { ?>
 			<div class="notice notice-success">
-				<p><?php _e('Quiz has been updated Successfully!', 'beatnik-quiz'); ?></p>
+				<p><?php _e('Quiz has been updated Successfully!', 'studiox-quiz'); ?></p>
 			</div>
 		<?php } ?>
 
@@ -24,7 +24,7 @@
             ?>
 				<tr class="row">
 					<th scope="row">
-						<label for="title"><?php _e('Title', 'beatnik-quiz'); ?></label>
+						<label for="title"><?php _e('Title', 'studiox-quiz'); ?></label>
 					</th>
 
 					<td>
@@ -36,7 +36,7 @@
 				<tr>
 					<th scope="row">
 						<input type="hidden" name="action" value="image"/>
-						<label for="image"><?php _e('Featured Image', 'beatnik-quiz'); ?></label>
+						<label for="image"><?php _e('Featured Image', 'studiox-quiz'); ?></label>
 					</th>
 
 					<td>
@@ -48,7 +48,7 @@
 		</table>
 
 		<?php wp_nonce_field( 'new-quiz' ); ?>
-		<?php submit_button( __( 'Update Quiz', 'beatnik-quiz' ), 'primary', 'submit_quiz' ); ?>
+		<?php submit_button( __( 'Update Quiz', 'studiox-quiz' ), 'primary', 'submit_quiz' ); ?>
 	</form>
 
 </div>

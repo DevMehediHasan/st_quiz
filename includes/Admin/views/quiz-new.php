@@ -38,10 +38,11 @@
 				<tr>
 					<th scope="row">
 						<input type="hidden" name="action" value=""/>
-						<label for="image_one"><?php _e('First Image', 'studiox-quiz'); ?></label>
+						<label for="image_one"><?php _e('First Image / Title', 'studiox-quiz'); ?></label>
 					</th>
 
 					<td>
+						<input type="text" name="title_one" id="title_one" class="regular-text" value="">
 						<input type="file" name="image_one" id="image_one" class="regular-text" value="">
 					</td>
 				</tr>
@@ -49,10 +50,11 @@
 				<tr>
 					<th scope="row">
 						<input type="hidden" name="action" value=""/>
-						<label for="image_two"><?php _e('Seceond Image', 'studiox-quiz'); ?></label>
+						<label for="image_two"><?php _e('Seceond Image / Title', 'studiox-quiz'); ?></label>
 					</th>
 
 					<td>
+						<input type="text" name="title_two" id="title_two" class="regular-text" value="">
 						<input type="file" name="image_two" id="image_two" class="regular-text" value="">
 					</td>
 				</tr>

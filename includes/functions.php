@@ -4,20 +4,23 @@ function bt_insert_quiz( $args = []){
 	global $wpdb;
 
 	if ( empty($args['title'])){
-		return new \WP_Error( 'no-title', __('You must provide a title.', 'beatnik-quiz'));
+		return new \WP_Error( 'no-title', __('You must provide a title.', 'studiox-quiz'));
 	}
 
 	$defaults = [
-		'title'			=> '',
-		'image'			=> '',
-		'image_one'		=> '',
-		'image_two'		=> '',
-		'created_at'	=> current_time('mysql'),
+		'title'					=> '',
+		'image'					=> '',
+		'title_one'				=> '',
+		'image_one'				=> '',
+		'title_two'				=> '',
+		'image_two'				=> '',
+		'created_at'			=> current_time('mysql'),
 	];
 
 	$data = wp_parse_args( $args, $defaults);
 
 
+	//var_dump($data);
 	$inserted = $wpdb->insert(
 		"{$wpdb->prefix}st_quizes",
 		$data,
@@ -26,12 +29,14 @@ function bt_insert_quiz( $args = []){
 			'%s',
 			'%s',
 			'%s',
+			'%s',
+			'%s',
 			'%s'
 		]
 	);
-
+	//var_dump($inserted);
 	if (! $inserted) {
-		return new \WP_Error('failed-to-insert', __('Failed to insert data', 'beatnik-quiz'));
+		return new \WP_Error('failed-to-insert', __('Failed to insert data', 'studiox-quiz'));
 	}
 	return $wpdb->insert_id;
 }
