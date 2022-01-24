@@ -25,39 +25,46 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
   .title h1{
     color: #fff;
   }
-
-  .onClickTextOverImage{
-  width:38rem;
-  height:38rem;
-  background-size:cover;
-  display:inline-block;
-  margin:4px;
-  cursor:pointer;
-  position:relative;
+  .vote-wrap {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #222222;
+    transition: 0.25s linear;
+    border-bottom: 10px solid #b29042;
+    text-align: left;
+    padding: 30px 15px;
+    position: absolute;
+}
+.vote-wrap:before {
+    content: "";
+    border-top: 0 solid transparent;
+    border-bottom: 10px solid #b29042;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.onClickTextOverImage div{
-  position:absolute;
-  color:#fff;
-  padding:8px;
-  top:0;
-  bottom:0;
-  right:0;
-  left:0;
-  background-color:rgba(0,0,0,0.5);
-  border-radius:16px;
-  padding-top:35%;
-  text-align:center;
-  opacity:0;
-  visibility:hidden;
-  transition:.3s;
+.vote-wrap.is-show {
+    display: none;
+}
+.card img{
+  cursor: pointer;
+}
+.vote-wrap h1{
+  color: #fff;
+  font-weight: bold;
+}
+.vote-wrap h5{
+  color: #fff;
+}
+.vote-wrap h5{
+  color: #fff;
 }
 
-.onClickTextOverImage.show div{
-  opacity:1;
-  padding-top:40%;
-  visibility:visible;
-}
 </style>
 
 <?php 
@@ -90,24 +97,30 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
 </div>
   <div class="row">
     <div class="card col-md-6" style="width: 38rem;">
-        <!-- <img class="card-img-top" src="<?php //echo wp_get_original_image_url( $question->image_one ); ?>" alt="Card image cap">
+        <img class="card-img-top" id="myImg" src="<?php echo wp_get_original_image_url( $question->image_one ); ?>" alt="Card image cap">
         <div class="card-body my-card">
             <p class="card-text"><?php echo $question->title_one ?></p>
-        </div> -->
-        <div class="onClickTextOverImage"
-          style="background-image:url(<?php echo wp_get_original_image_url( $question->image_one );?>)">
-          <div>Total Click <span id="display" onclick="stopPropagation(event)">0</span></div>
         </div>
-        <div class="card-body my-card">
-            <p class="card-text"><?php echo $question->title_one ?></p>
-          </div>
+        <div class="vote-wrap is-show">
+            <h1 class="total-vote">Hello Over</h1>
+            <h5 class="ans-text"><?php echo 'Choose' ?></h5>
+            <h5 class="total-people"><?php echo 'Total <span id="lblShow">0</span> People answered this question' ?></h5>
+        </div>
     </div>
+
     <div class="card col-md-6" style="width: 38rem;">
         <img class="card-img-top" src="<?php echo wp_get_original_image_url( $question->image_two ); ?>" alt="Card image cap">
         <div class="card-body my-card">
             <p class="card-text"><?php echo $question->title_two ?></p>
         </div>
+
+        <div class="vote-wrap is-show">
+            <h1 class="total-vote">Hello Over</h1>
+            <h5 class="ans-text">Hello Over</h5>
+            <h5 class="total-people">Hello Over</h5>
+        </div>
     </div>
+
   </div>
   <?php } ?>
 </div>
@@ -116,6 +129,41 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
 
 
 <script>
+
+$(document).ready(function(){
+  $("img").click(function(){
+    $("div").removeClass("is-show");
+  });
+});
+
+
+$(document).ready(function()
+  {
+    $(function(){
+    let i=0;
+     $('#myImg').click(function(){
+        $(this).html(i++);
+        $('#lblShow').text(i);
+        // console.log(i);
+       });
+     });
+  });
+  
+
+  function clickCounter() {
+  if (typeof(Storage) !== "undefined") {
+    if (localStorage.clickcount) {
+      localStorage.clickcount = Number(localStorage.clickcount)+1;
+    } else {
+      localStorage.clickcount = 1;
+    }
+    document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.clickcount + " time(s).";
+  } else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+  }
+}
+
+
    var count = 0;
         var btn = document.getElementsByClassName("onClickTextOverImage");
         var disp = document.getElementById("display");
