@@ -96,7 +96,7 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
     <h1><?php echo $question->title ?></h1>
 </div>
   <div class="row">
-    <div class="card col-md-6" style="width: 38rem;">
+    <div class="card col-md-6 ans1" style="width: 38rem;">
         <img class="card-img-top" id="myImg" src="<?php echo wp_get_original_image_url( $question->image_one ); ?>" alt="Card image cap">
         <div class="card-body my-card">
             <p class="card-text"><?php echo $question->title_one ?></p>
@@ -108,7 +108,7 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
         </div>
     </div>
 
-    <div class="card col-md-6" style="width: 38rem;">
+    <div class="card col-md-6 ans2" style="width: 38rem;">
         <img class="card-img-top" src="<?php echo wp_get_original_image_url( $question->image_two ); ?>" alt="Card image cap">
         <div class="card-body my-card">
             <p class="card-text"><?php echo $question->title_two ?></p>
@@ -131,7 +131,13 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
 <script>
 
 $(document).ready(function(){
-  $("img").click(function(){
+  $(".ans1").click(function(){
+    $("div").removeClass("is-show");
+  });
+});
+
+$(document).ready(function(){
+  $("ans2").click(function(){
     $("div").removeClass("is-show");
   });
 });
