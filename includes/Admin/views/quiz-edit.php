@@ -9,19 +9,21 @@
 
 	<a class="page-title-action" href="<?php echo admin_url('admin.php?page=studiox-quiz'); ?>"><?php _e('Back', 'studiox-quiz'); ?></a>
 	
-	
+	<?php
+	var_dump($quiz);
+	?>
 	<form action="" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 		<table class="form-table">
 		<?php
                 global $wpdb;
                 global $result;
-                $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}st_quizes ");
+                $result = $wpdb->get_results ( "SELECT * FROM {$wpdb->prefix}st_quizes" );
 
             ?>
 			
-			<?php foreach( $result as $quizes) { ?>
+			<?php //foreach( $result as $quizes) { ?>
 			<tbody>
-			<?php //print_r($quizes); ?>
+			<?php print_r($quizes); ?>
 				<tr class="row">
 					<th scope="row">
 						<label for="title"><?php _e('Title', 'studiox-quiz'); ?></label>
@@ -69,7 +71,7 @@
 				</tr>
 
 			</tbody>
-			<?php } ?>
+			<?php //} ?>
 		</table>
 
 		<?php wp_nonce_field( 'new-quiz' ); ?>

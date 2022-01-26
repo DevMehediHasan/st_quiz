@@ -51,7 +51,7 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
 .vote-wrap.is-show {
     display: none;
 }
-.card img{
+.card{
   cursor: pointer;
 }
 .vote-wrap h1{
@@ -65,28 +65,24 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
   color: #fff;
 }
 
+.disable{
+  opacity: 0.1;
+  cursor: unset;
+}
+.card {
+    padding: 0;
+}
+
+.thumbnail {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 </style>
 
-<?php 
-        
-        // $quizId = $_GET['quiz'];
-        
-        
-        // $quizURL = "https://quiz.coconutforlife.org/api/quiz-detail/" . $quizId;
-        // $response = wp_remote_get($quizURL);
-        // if(is_array($response)){
-        //     $quiz = json_decode($response['body']);      
-        
+<?php   
         global $wpdb;
-        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}st_quizes WHERE id = $quizID" );
-        
-        // $quiz = json_decode($results['body']);
-        // $id = $_GET['id'];
-        //$image = $wpdb->get_var( "SELECT image FROM {$wpdb->prefix}quizes WHERE id = $quizID");
-        //$title = $wpdb->get_var( "SELECT title FROM {$wpdb->prefix}quizes WHERE id = $quizID");
-        // var_dump($title);
-        // $title = $wpdb->get_var( "SELECT * FROM {$wpdb->prefix}quizes WHERE id = $quizID" );
-        // $questions = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}quiz_questions WHERE quiz_id = $quizID" );
+        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}st_quizes WHERE id = $quizID" );        
         
 ?>
 
@@ -101,23 +97,23 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
         <div class="card-body my-card">
             <p class="card-text"><?php echo $question->title_one ?></p>
         </div>
-        <div class="vote-wrap is-show">
-            <h1 class="total-vote">Hello Over</h1>
-            <h5 class="ans-text"><?php echo 'Choose' ?></h5>
+        <div class="vote-wrap vote1 is-show">
+            <h1 class="total-vote"><?php echo 'People' ?></h1>
+            <h5 class="ans-text"><?php echo 'Choose '. $question->title_one ?></h5>
             <h5 class="total-people"><?php echo 'Total <span id="lblShow">0</span> People answered this question' ?></h5>
         </div>
     </div>
 
     <div class="card col-md-6 ans2" style="width: 38rem;">
-        <img class="card-img-top" src="<?php echo wp_get_original_image_url( $question->image_two ); ?>" alt="Card image cap">
+        <img class="card-img-top" id="myImg2" src="<?php echo wp_get_original_image_url( $question->image_two ); ?>" alt="Card image cap">
         <div class="card-body my-card">
             <p class="card-text"><?php echo $question->title_two ?></p>
         </div>
 
-        <div class="vote-wrap is-show">
-            <h1 class="total-vote">Hello Over</h1>
-            <h5 class="ans-text">Hello Over</h5>
-            <h5 class="total-people">Hello Over</h5>
+        <div class="vote-wrap vote2 is-show">
+            <h1 class="total-vote"><?php echo 'People' ?></h1>
+            <h5 class="ans-text"><?php echo 'Choose '. $question->title_two ?></h5>
+            <h5 class="total-people"><?php echo 'Total <span id="lblShow">0</span> People answered this question' ?></h5>
         </div>
     </div>
 
@@ -132,71 +128,82 @@ $quizID = explode('=',$_SERVER['QUERY_STRING'])[1];
 
 $(document).ready(function(){
   $(".ans1").click(function(){
-    $("div").removeClass("is-show");
+    $(".vote1").removeClass("is-show");
+    $("img").removeClass("#myImg2");
+    $(".ans2").addClass("disable");
   });
+
+  $(".ans2").click(function(){
+    $(".vote2").removeClass("is-show");
+    $(".ans1").addClass("disable");
+  });
+
 });
+
+
+
+// $(document).ready(function()
+//   {
+//     $(function(){
+//     let i=0;
+//      $('#myImg').click(function(){
+//         $(this).html(i++);
+//         $('#lblShow').text(i);
+//         // console.log(i);
+//        });
+//      });
+//   });
+  
+
+  // jQuery('#myImg').submit(ajaxSubmit);
+
+  // $(function(){
+  //   let i=0;
+  //    $('#myImg').click(function(){
+  //       $(this).html(i++);
+  //       $('#lblShow').text(i);
+  //       // console.log(i);
+  //      });
+  //    });
+
+  //           function ajaxSubmit() {
+
+  //               var count_one = jQuery(this).serialize();
+
+  //               jQuery.ajax({
+  //                   type: "POST",
+  //                   url: "/wp-admin/admin-ajax.php",
+  //                   data: count_one,
+  //                   success: function(data) {
+  //                       jQuery("#feedback").html(data);
+  //                   }
+  //               });
+
+  //               return false;
+  //           }
+
 
 $(document).ready(function(){
-  $("ans2").click(function(){
-    $("div").removeClass("is-show");
-  });
-});
-
-
-$(document).ready(function()
-  {
-    $(function(){
+  
     let i=0;
      $('#myImg').click(function(){
         $(this).html(i++);
         $('#lblShow').text(i);
         // console.log(i);
        });
-     });
-  });
-  
+ 
+  $.ajax({
+  url:"../wp-content/plugins/Rating/db_connect.php",
+  method:"POST",
+  data:{},
+  success:function(data)
+  {
 
-  function clickCounter() {
-  if (typeof(Storage) !== "undefined") {
-    if (localStorage.clickcount) {
-      localStorage.clickcount = Number(localStorage.clickcount)+1;
-    } else {
-      localStorage.clickcount = 1;
-    }
-    document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.clickcount + " time(s).";
-  } else {
-    document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+  load_rating_data();
+
   }
-}
+  })
+  })
 
-
-   var count = 0;
-        var btn = document.getElementsByClassName("onClickTextOverImage");
-        var disp = document.getElementById("display");
-  
-        btn.onclick = function () {
-            count++;
-            disp.innerHTML = count;
-        }
-
-    var textOverImages = document.getElementsByClassName("onClickTextOverImage");
-var previousTextOverImage;
-for (var i = 0; i < textOverImages.length; i++) {
-  textOverImages[i].onclick = function() {
-    var classes = this.classList;
-    if (classes.contains("show")) {
-      classes.remove("show");
-    } else {
-      if (previousTextOverImage != null)
-        previousTextOverImage.classList.remove("show");
-      previousTextOverImage = this;
-      classes.add("show");
-    }
-  }
-}
-
-function stopPropagation(event){
-  event.stopPropagation();
-}
 </script>
 

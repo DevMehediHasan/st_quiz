@@ -19,8 +19,28 @@ function bt_insert_quiz( $args = []){
 
 	$data = wp_parse_args( $args, $defaults);
 
-
-	//var_dump($data);
+	if (isset( $data['id']) ){
+		$id = $data['id'];
+		unset($data['id']);
+		//var_dump($data);
+		$updated = $wpdb->update(
+			"{$wpdb->prefix}st_quizes",
+			$data,
+			[ 'id' => $id],
+			[
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s'
+			],
+			[ '%d' ]
+		);
+		return $updated;
+	} else {
+		//var_dump($data);
 	$inserted = $wpdb->insert(
 		"{$wpdb->prefix}st_quizes",
 		$data,
@@ -39,6 +59,7 @@ function bt_insert_quiz( $args = []){
 		return new \WP_Error('failed-to-insert', __('Failed to insert data', 'studiox-quiz'));
 	}
 	return $wpdb->insert_id;
+	}
 }
 
 function bt_get_quizes( $args= []) {

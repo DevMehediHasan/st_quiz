@@ -89,14 +89,20 @@ class Quiz
 			return;
 		}
 
-		$insert_id = bt_insert_quiz([
+
+		$args =[
 			'title'	=> $title,
 			'image'	=> $image,
 			'title_one'	=> $title_one,
 			'image_one'	=> $image_one,
 			'title_two'	=> $title_two,
 			'image_two'	=> $image_two
-		]);
+		];
+
+		if( $id ){
+			$args['id'] = $id;
+		}
+		$insert_id = bt_insert_quiz( $args );
 
 		if (is_wp_error($insert_id)) {
 			wp_die($insert_id->get_error_message());
